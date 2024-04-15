@@ -3,6 +3,8 @@
 import React from "react";
 import GSProvider from "./GSProvider";
 import { GlobalProvider } from "../context/globalProvider";
+import { Toaster } from "react-hot-toast";
+
 
 interface Props {
     children: React.ReactNode;
@@ -22,6 +24,7 @@ function CtxtProvider({ children }: Props) {
     
 
     return <GlobalProvider>
+                <Toaster />
                 {children}
            </GlobalProvider>;
 }

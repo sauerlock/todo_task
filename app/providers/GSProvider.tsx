@@ -15,10 +15,17 @@ function GSProvider({children}: Props) {
 }
 
 const GStyles= styled.div`
-    padding: 2rem;
+    padding: 1rem;
     display: flex;
-    gap: 2.5rem;
+    gap: 1.5rem;
     height: 100%;
+    width: 100%;
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300, 1fr));
+        gap: 1.5rem;
+    }
 `;
  
 export default GSProvider;
