@@ -44,21 +44,21 @@ function Sidebar() {
             </ul>
             <button></button>
         </SidebarStyled>
-        )
+    )
 }
 
 const SidebarStyled = styled.nav`
     position: relative;
     width: ${(props) => props.theme.sidebarWidth};
-    background-color: ${(props) => props.theme.colorBg4};
-    border: 3px solid ${(props) => props.theme.borderColor};
+    background-color: #ffffff;
+    border: 2px solid ${(props) => props.theme.borderColor};
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    color: red;
+    color: blue;
     &:hover {
-        border-color: darkred;
+        border-color: darkblue;
     }
 
     .profile {
@@ -68,7 +68,7 @@ const SidebarStyled = styled.nav`
         border-radius: 1rem;
         cursor: pointer;
         font-weight: 300;
-        color: darkred;
+        color: darkblue;
         display: flex;
         align-items: center;
         
@@ -80,7 +80,7 @@ const SidebarStyled = styled.nav`
             height: 100%;
             backdrop-filter: blur(10px);
             z-index: 1;
-            background: ${(props) => props.theme.colorBg3};
+            background: white;
             transition: all 0.55s liner;
             border-radius: 1rem;
             border: 1px solid ${(props) => props.theme.colorBg4};
@@ -126,8 +126,8 @@ const SidebarStyled = styled.nav`
             
             .profile-overlay {
                 opacity: 1;
-                background-color: ${(props) => props.theme.activeNavLinkHover};
-                border: 3px solid red;
+                background-color: #b4b4b4;
+                border: 3px solid blue;
                 transition: all 0.40s ease;
             }
     
@@ -136,7 +136,7 @@ const SidebarStyled = styled.nav`
             }
 
             h1 {
-                color: red;
+                color: blue;
                 font-weight: 300;
                 transition: all 0.40s ease;
             }
@@ -159,7 +159,7 @@ const SidebarStyled = styled.nav`
             top: 0;
             width: 0;
             height: 100%;
-            background-color: ${(props) => props.theme.activeNavLinkHover};
+            background-color: #b1b0b0;
             z-index: 1;
             transition: all 0.3s ease-in-out;
         }
@@ -171,7 +171,7 @@ const SidebarStyled = styled.nav`
             top: 0;
             width: 0%;
             height: 100%;
-            background-color: red;
+            background-color: blue;
             border-bottom-left-radius: 5px;
             border-top-left-radius: 5px;
         }
@@ -181,13 +181,13 @@ const SidebarStyled = styled.nav`
             transition: all 0.3s ease-in-out;
             z-index: 2;
             line-height: 0;
-            color: darkred;
+            color: darkblue;
         }
 
         i {
             display: flex;
             align-items: center;
-            color: darkred;
+            color: darkblue;
         }
         &:hover {
             &::after {
@@ -196,11 +196,11 @@ const SidebarStyled = styled.nav`
         }
     }
     .active {
-        background-color: ${(props) => props.theme.colorBg3};
+        background-color: #535353;
         
         i,
         a{
-            color: red;
+            color: white;
         }
     }
     .active::before{

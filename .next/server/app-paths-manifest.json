@@ -1,5 +1,5 @@
 {
   "/page": "app/page.js",
-  "/incomplete/page": "app/incomplete/page.js",
-  "/completed/page": "app/completed/page.js"
+  "/api/tasks/route": "app/api/tasks/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js"
 }
