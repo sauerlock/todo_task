@@ -32,27 +32,28 @@ function TaskItem({ title, description, date, isCompleted, id }: Props) {
 }
 
 const TaskItemStyled = styled.div`  
-    padding: 2.5rem 1.3rem;
+    padding: 1.2rem 1rem;
     border-radius: 1rem;
     background-color: white;
     box-shadow: blue;
-    border: 3px dashed darkblue;
+    border: 3px dashed blue;
     height: 16rem;
-    width: 20rem;
     display: flex;
     flex-direction: column;
-    transition: all 0.3s ease;
-    margin: auto;
+    gap: 0.5rem;
 
+    
     .date {
        margin-top: auto;
-       color: navy;
     }
 
     &:hover {
       border: 3px solid navy;
       background-color: white;
-      color: navy;
+      color: blue;
+      .completed{
+        color: navy;
+      }
 
     }
 
@@ -70,10 +71,13 @@ const TaskItemStyled = styled.div`
             border: none;
             outline: none;
             cursor: pointer;
+            
             i {
-                font-size: 1rem;
+                font-size: 1.4rem;
                 color: navy;
+                
             }
+            
         }
     
         .edit {
@@ -91,7 +95,8 @@ const TaskItemStyled = styled.div`
         .completed {
             background:${(props) => props.theme.colorGreenDark};
         }
-    
+        
+        
     }
     
 `;

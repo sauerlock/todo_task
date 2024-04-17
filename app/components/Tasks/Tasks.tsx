@@ -16,13 +16,13 @@ interface Props{
 
 function Tasks({ title, tasks }: Props) {
   const { theme, isLoading, openModal, modal } = useGlobalState();
+  
 
   return (
     <TaskStyled theme={theme}>
       {modal && <Modal content={<CreateContent />} />}
       <h1>{title}</h1>
-      <div className="tasks-container">
-        <div className="tasks grid">
+        {!isLoading ? <div className="tasks grid">
           {tasks.map((task) => (
             <TaskItem
               key={task.id}
@@ -33,12 +33,16 @@ function Tasks({ title, tasks }: Props) {
               id={task.id}
             />
           ))}
-        </div>
-        <button className="create-task" onClick={openModal}>
+          <button className="create-task" onClick={openModal}>
           {plus}
           Add New Task
         </button>
-      </div>
+        </div> 
+        : ( 
+        <div className="tasks-loader w-full h-full flex items-center justify-center">
+            <span className="loader"></span>
+        </div>)}
+
     </TaskStyled>
   );
 }
@@ -46,26 +50,21 @@ function Tasks({ title, tasks }: Props) {
 
 
 const TaskStyled = styled.main`
- position: relative;
+  position: relative;
   padding: 2rem;
   width: 100%;
   background-color: #ffffff;
-  border: 2px solid navy;
+  border: 3px solid white;
   border-radius: 1rem;
   height: 100%;
-  width: 100%;
   overflow-y: auto;
-  color: navy;
-  
 
- .tasks-container {
-  display: inline-flex;
-  flex-wrap: wrap;
+&::-webkit-scrollbar {
+    width: 0.5rem;
 }
 
 .tasks {
-  margin: 2rem 1rem;
-  margin-left: auto;
+  margin: 2rem 0;
 }
     > h1 {
     font-size: clamp(1.5rem, 2vw, 2rem);
@@ -77,28 +76,25 @@ const TaskStyled = styled.main`
       position: absolute;
       bottom: -0.5rem;
       left: 0;
-      width: 8.5rem;
+      width: 7rem;
       height: 0.2rem;   
-      background-color: navy;
+      background-color: blue;
       border-radius: 0.5rem;
     }
   }
 
   .create-task {
-  background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.1rem;
-  margin: auto;
-  padding: 2rem 5rem;
-  height: 16rem;
-  color: navy;
-  font-weight: 600;
-  cursor: pointer;
-  border-radius: 1rem;
-  border: 3px dashed navy;
-  transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 16rem;
+    color: blue;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 1rem;
+    border: 3px dashed blue;
+    transition: all 0.3s ease;
 
   i {
     font-size: 1.5rem;
