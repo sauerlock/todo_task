@@ -6,10 +6,16 @@ import menu from "@/app/menuUtils/menu";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useGlobalState } from "@/app/context/globalProvider";
+import Button from "../Button/Button";
+import { logout } from "@/app/menuUtils/Icons";
+import { useClerk } from "@clerk/nextjs";
 
 function Sidebar() {
     const { theme } = useGlobalState();
     const router = useRouter();
+    
+    const { signOut } = useClerk();
+    
     const pathName = usePathname();
     const handleClick = (link:string) => {
         router.push(link);
@@ -42,7 +48,20 @@ function Sidebar() {
                 );
                 })}
             </ul>
-            <button></button>
+            <div className="sign-out relative">
+                <Button
+                    name={"Sign Out"}
+                    type={"submit"}
+                    padding={"0.4rem 0.8rem"}
+                    borderRad={"0.8rem"}
+                    fw={"500"}
+                    fs={"1.2rem"}
+                    icon={logout}
+                    click={() =>{
+                        signOut(() => router.push("/signin"));
+                    }}
+                />
+            </div>
         </SidebarStyled>
     )
 }
@@ -56,11 +75,11 @@ const SidebarStyled = styled.nav`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    color: blue;
+    color: navy;
     &:hover {
-        border-color: darkblue;
+        border-color: blue;
     }
-
+    
     .profile {
         margin: 1.5rem;
         padding: 1rem 1.5rem;
@@ -68,7 +87,7 @@ const SidebarStyled = styled.nav`
         border-radius: 1rem;
         cursor: pointer;
         font-weight: 300;
-        color: darkblue;
+        color: navy;
         display: flex;
         align-items: center;
         
@@ -81,9 +100,9 @@ const SidebarStyled = styled.nav`
             backdrop-filter: blur(10px);
             z-index: 1;
             background: white;
-            transition: all 0.55s liner;
+            transition: all 0.55s linear;
             border-radius: 1rem;
-            border: 1px solid ${(props) => props.theme.colorBg4};
+            border: 3px dashed ${(props) => props.theme.colorBg4};
             opacity: 0.2;
         }
 
@@ -112,7 +131,7 @@ const SidebarStyled = styled.nav`
 
             img {
               border-radius: 100%;
-              transition: all 0.5s ease;
+              transition: all 0.5s linear;
             }
         }
         
@@ -123,10 +142,9 @@ const SidebarStyled = styled.nav`
         }
 
         &:hover {
-            
             .profile-overlay {
                 opacity: 1;
-                background-color: #b4b4b4;
+                background-color: #dbdbdb;
                 border: 3px solid blue;
                 transition: all 0.40s ease;
             }
@@ -159,9 +177,9 @@ const SidebarStyled = styled.nav`
             top: 0;
             width: 0;
             height: 100%;
-            background-color: #b1b0b0;
+            background-color: #d8d8d8;
             z-index: 1;
-            transition: all 0.3s ease-in-out;
+            transition: all 0.55s ease-in-out;
         }
 
         &::before {
@@ -177,30 +195,30 @@ const SidebarStyled = styled.nav`
         }
 
         a {
-            font-weight: 500;
+            font-weight: 700;
             transition: all 0.3s ease-in-out;
             z-index: 2;
             line-height: 0;
-            color: darkblue;
         }
 
         i {
             display: flex;
             align-items: center;
-            color: darkblue;
+            color: navy;
         }
+        
         &:hover {
             &::after {
                 width:100%;
             }
         }
     }
+    
     .active {
-        background-color: #535353;
+        background-color: #dbdbdb;
         
-        i,
-        a{
-            color: white;
+        i, a{
+            color: blue;
         }
     }
     .active::before{
