@@ -1,6 +1,7 @@
 "use client";
 // Create context for theme updating and the actual context.
 import React, { createContext, useState, useContext } from "react";
+import toast from "react-hot-toast";
 import themes from "./themes";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
@@ -30,14 +31,19 @@ export const GlobalProvider = ({ children }) => {
 
     const deleteTask = async (id) => {
         try {
-            const res = axios.delete(`/api/tasks/${id}`);
+            const res = await axios.delete(`/api/tasks/${id}`);
             toast.success("Task deleted");
             alltasks();
         } catch (error) {
             console.log(error)
             total.error("Something went wrong");
         }
-    }
+    };
+
+    const completedTasks = tasks.filter((tasks) => tasks.isCompleted === true);
+    const importantTasks = tasks.filter((tasks) => tasks.isImportant === true); 
+    const incompleteTasks = tasks.filter((tasks) => tasks.isCompleted === false);
+
 
     React.useEffect(() => {
         if(user) alltasks();
@@ -48,6 +54,9 @@ export const GlobalProvider = ({ children }) => {
             tasks,
             deleteTask,
             isLoading,
+            completedTasks,
+            importantTasks,
+            incompleteTasks,
         }} >
             <GlobalUpdateContext.Provider value={{}}>
                 {children}

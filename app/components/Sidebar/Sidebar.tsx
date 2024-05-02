@@ -8,12 +8,14 @@ import { usePathname, useRouter } from "next/navigation";
 import { useGlobalState } from "@/app/context/globalProvider";
 import Button from "../Button/Button";
 import { logout } from "@/app/menuUtils/Icons";
-import { useClerk } from "@clerk/nextjs";
+import { useClerk, UserButton, useUser } from "@clerk/nextjs";
+
 
 function Sidebar() {
     const { theme } = useGlobalState();
     const router = useRouter();
-    
+    const { user } = useUser();
+    const { firstName, lastName, imageUrl } = user || { firstName: "", lastName: "", imageUrl: ""};
     const { signOut } = useClerk();
     
     const pathName = usePathname();
@@ -28,6 +30,9 @@ function Sidebar() {
                 <div className="image">
                     <Image width={70} height={70} src="/vader.jpeg" alt="profile"/>
                 </div>
+                <div className="user-btn absolute z-20 top-0 w-full h-full">
+                  <UserButton />
+                </div>
                 <h1>
                     <span>Darth</span>
                     <span>Vader</span>
@@ -38,6 +43,7 @@ function Sidebar() {
                     const link = item.link;
                     return (
                     <li 
+                        key={item.id}
                         className={`nav-item ${pathName === link ? "active" : ""}`}
                         onClick={() => {
                         handleClick(link);
@@ -69,15 +75,28 @@ function Sidebar() {
 const SidebarStyled = styled.nav`
     position: relative;
     width: ${(props) => props.theme.sidebarWidth};
-    background-color: #ffffff;
+    background-color: ${(props) => props.theme.borderColor2};
     border: 2px solid ${(props) => props.theme.borderColor};
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    color: navy;
-    &:hover {
-        border-color: blue;
+    color: #5cd6ff;
+    
+    .user-btn {
+      .cl-rootBox {
+        width: 100%;
+        height: 100%;
+      }
+      .cl-userButtonBox {
+        width: 100%;
+        height: 100%;
+        .cl-userButtonTrigger {
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+        }
+      }
     }
     
     .profile {
@@ -87,9 +106,10 @@ const SidebarStyled = styled.nav`
         border-radius: 1rem;
         cursor: pointer;
         font-weight: 300;
-        color: navy;
+        color:  #5cd6ff;
         display: flex;
         align-items: center;
+        
         
         .profile-overlay {
             position: absolute;
@@ -102,8 +122,8 @@ const SidebarStyled = styled.nav`
             background: white;
             transition: all 0.55s linear;
             border-radius: 1rem;
-            border: 3px dashed ${(props) => props.theme.colorBg4};
-            opacity: 0.2;
+            border: 3px dashed #76ddff;
+            opacity: 0.1;
         }
 
         h1 {
@@ -131,7 +151,7 @@ const SidebarStyled = styled.nav`
 
             img {
               border-radius: 100%;
-              transition: all 0.5s linear;
+              transition: all 0.5s ease;
             }
         }
         
@@ -142,93 +162,91 @@ const SidebarStyled = styled.nav`
         }
 
         &:hover {
+            color: blue;
             .profile-overlay {
                 opacity: 1;
-                background-color: #dbdbdb;
-                border: 3px solid blue;
-                transition: all 0.40s ease;
+                background-color: ${(props) => props.theme.borderColor};
+                border: 3px solid navy;
+                transition: all 0.55s ease;
             }
     
-            .image {
-                transform: scale(1.2);
-            }
-
-            h1 {
-                color: blue;
-                font-weight: 300;
-                transition: all 0.40s ease;
+            img {
+                transform: scale(1.1);
             }
         }
     }
     
-    .nav-item {
-        position: relative;
-        padding: 0.8rem 1rem 0.9rem 2.1rem;
-        margin: 0.4rem 0;
-        display: grid;
-        grid-template-columns: 40px 1fr;
-        cursor: pointer;
-        align-items: center;
+     .nav-item {
+    position: relative;
+    padding: 0.8rem 1rem 0.9rem 2.1rem;
+    margin: 0.3rem 0;
 
-        &::after {
-            position: absolute;
-            content: "";
-            left: 0;
-            top: 0;
-            width: 0;
-            height: 100%;
-            background-color: #d8d8d8;
-            z-index: 1;
-            transition: all 0.55s ease-in-out;
-        }
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    cursor: pointer;
+    align-items: center;
 
-        &::before {
-            position: absolute;
-            content: "";
-            right: 0;
-            top: 0;
-            width: 0%;
-            height: 100%;
-            background-color: blue;
-            border-bottom-left-radius: 5px;
-            border-top-left-radius: 5px;
-        }
-
-        a {
-            font-weight: 700;
-            transition: all 0.3s ease-in-out;
-            z-index: 2;
-            line-height: 0;
-        }
-
-        i {
-            display: flex;
-            align-items: center;
-            color: navy;
-        }
-        
-        &:hover {
-            &::after {
-                width:100%;
-            }
-        }
-    }
-    
-    .active {
-        background-color: #dbdbdb;
-        
-        i, a{
-            color: blue;
-        }
-    }
-    .active::before{
-        width: 0.3rem;
+    &::after {
+      position: absolute;
+      content: "";
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 100%;
+      background-color: rgba(240, 232, 232, 0.03);
+      z-index: 1;
+      transition: all 0.3s ease-in-out;
     }
 
-    >button{
-       margin: 1.5rem;
+    &::before {
+      position: absolute;
+      content: "";
+      right: 0;
+      top: 0;
+      width: 0%;
+      height: 100%;
+      background-color: blue;
+
+      border-bottom-left-radius: 5px;
+      border-top-left-radius: 5px;
     }
 
+    a {
+      font-weight: 500;
+      transition: all 0.3s ease-in-out;
+      z-index: 2;
+      line-height: 0;
+    }
+
+    i {
+      display: flex;
+      align-items: center;
+      color:  #5cd6ff;
+
+    }
+
+    &:hover {
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+
+  .active {
+    background-color: black;
+    i,
+    a {
+      color: #2323ff;
+    }
+  }
+
+  .active::before {
+    width: 0.3rem;
+  }
+
+  > button {
+    margin: 1.5rem;
+  }
 `;
 
 export default Sidebar;

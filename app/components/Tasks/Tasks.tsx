@@ -1,11 +1,10 @@
 "use client";
 import React from "react";
 import styled from "styled-components";
-import Image from "next/image";
 import { useGlobalState } from "@/app/context/globalProvider";
 import CreateContent from "@/app/Modals/CreateContent";
 import TaskItem from "../TaskItem/TaskItem";
-import { plus } from "@/app/menuUtils/Icons";
+import { add, plus } from "@/app/menuUtils/Icons";
 
 
 interface Props{
@@ -15,14 +14,12 @@ interface Props{
 }
 
 function Tasks({ title, tasks }: Props) {
-  const { theme, isLoading, openModal, modal } = useGlobalState();
-  
-
+  const { theme, isLoading, } = useGlobalState();
   return (
     <TaskStyled theme={theme}>
-      {modal && <Modal content={<CreateContent />} />}
+      <CreateContent />
       <h1>{title}</h1>
-        {!isLoading ? <div className="tasks grid">
+        <div className="tasks grid">
           {tasks.map((task) => (
             <TaskItem
               key={task.id}
@@ -33,15 +30,12 @@ function Tasks({ title, tasks }: Props) {
               id={task.id}
             />
           ))}
-          <button className="create-task" onClick={openModal}>
+          <button className="create-task">
           {plus}
           Add New Task
         </button>
         </div> 
-        : ( 
-        <div className="tasks-loader w-full h-full flex items-center justify-center">
-            <span className="loader"></span>
-        </div>)}
+        
 
     </TaskStyled>
   );
@@ -53,12 +47,12 @@ const TaskStyled = styled.main`
   position: relative;
   padding: 2rem;
   width: 100%;
-  background-color: #ffffff;
-  border: 3px solid white;
+  background-color: ${(props) => props.theme.borderColor2};
+  border: 3px solid ${(props) => props.theme.borderColor};
   border-radius: 1rem;
   height: 100%;
   overflow-y: auto;
-
+  
 &::-webkit-scrollbar {
     width: 0.5rem;
 }
@@ -78,7 +72,7 @@ const TaskStyled = styled.main`
       left: 0;
       width: 7rem;
       height: 0.2rem;   
-      background-color: blue;
+      background-color: #5cd6ff;
       border-radius: 0.5rem;
     }
   }
@@ -89,11 +83,11 @@ const TaskStyled = styled.main`
     justify-content: center;
     gap: 0.5rem;
     height: 16rem;
-    color: blue;
+    color: rgba(255, 255, 255, 0.3);
     font-weight: 600;
     cursor: pointer;
     border-radius: 1rem;
-    border: 3px dashed blue;
+    border: 3px dashed rgba(0, 157, 255, 0.3);
     transition: all 0.3s ease;
 
   i {
@@ -102,8 +96,8 @@ const TaskStyled = styled.main`
   }
 
   &:hover {
-    background-color: white;
-    color: navy;
+    background-color: ${(props) => props.theme.borderColor};
+    color: white;
     border: 3px solid navy;
   }
 }
