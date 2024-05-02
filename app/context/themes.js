@@ -107,6 +107,7 @@ const themes = [
     borderRadiusSm: "8px",
     borderColor: "rgba(249,249,249, 0.08)",
     borderColor2: "rgba(249,249,249, 0.08)",
+    borderColor3: "rgb(0, 0, 94, 0.08)",
     shadow1: "4px 4px 84px rgba(16, 10, 86, 0.04)",
     shadow2: "0px 48px 77px rgba(8, 18, 69, 0.07)",
     shadow3: "0 14px 40px rgb(0 0 0 / 25%)",

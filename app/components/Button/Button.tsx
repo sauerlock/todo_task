@@ -54,14 +54,14 @@ const ButtonStyled = styled.button`
     position: relative;
     display: flex;
     align-items: center;
-    color: navy;
+    color: #5cd6ff;
     z-index: 5;
     cursor: pointer;
     transition: all 0.55s ease-in-out;
 
     i{
         margin-right: 1rem;
-        color: navy;
+        color: #76ddff;
         font: 1.5rem;
         transition: all 0.55s ease-in-out;
     }
